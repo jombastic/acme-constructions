@@ -1,0 +1,13 @@
+description = "Default layout"
+
+[staticPage]
+useContent = 1
+default = 0
+==
+{% partial "site/header" %}
+
+<main class="main">
+    {% page %}
+</main>
+
+{% partial "site/footer" %}

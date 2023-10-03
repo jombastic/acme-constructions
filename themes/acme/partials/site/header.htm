@@ -1,0 +1,31 @@
+[staticMenu]
+code = "main-menu"
+
+[viewBag]
+==
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% placeholder page_title default %}{{ this.page.title }}{% endplaceholder %} | ACME Construction</title>
+        {% partial "meta/styles" %}
+        {% partial "meta/seo" %}
+    </head>
+    {% set pageId = this.page.id %}
+    {% set pageTitle = this.page.title %}
+    {% if pageId is empty %}
+        {% set pageId = page.id %}
+    {% endif %}
+    {% if pageTitle is empty %}
+        {% set pageTitle = page.title %}
+    {% endif %}
+    <body class="page-{{ pageId }} layout-{{ this.layout.id }}">
+        <nav id="layout-nav" class="navbar" role="navigation">
+            <div class="container">
+                {% component 'staticMenu' %}
+            </div>
+        </nav>

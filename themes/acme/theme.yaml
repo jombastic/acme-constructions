@@ -1,0 +1,9 @@
+name: ACME
+description: 'Theme for ACME Construction'
+author: 'Derek Bell'
+homepage: 'http://icetech/'
+code: winter-cms
+form:
+    fields:
+        googleanalytics_id:
+            label: 'Google Analytics ID'
