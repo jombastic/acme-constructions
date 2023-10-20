@@ -8,8 +8,10 @@ default = 0
     {% partial "site/header" %}
 </header>
 
-<main class="main">
-    {% page %}
+<main class="main" id="layout-content">
+    <div class="container">
+        {% page %}
+    </div>
 </main>
 
 {% partial "site/footer" %}
