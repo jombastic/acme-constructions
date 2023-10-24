@@ -1,8 +1,117 @@
 title = "Home"
 url = "/"
-layout = "default"
+layout = "full-width"
 is_hidden = 0
 ==
-<div class="content">
-    <h1>Home Page</h1>
-</div>
+{# Hero #}
+<section class="hero">
+    <div class="container">
+        <h2>We build your dream</h2>
+    </div>
+</section>
+
+{# project categories #}
+<section class="categories">
+    <div class="container grid-small">
+        <div class="card">
+            <div class="card__image">
+                <a href=""><img src="{{ 'assets/images/front-homes.jpg' | theme }}" alt="Homes"></a>
+            </div>
+            <div class="card__content">
+                <a href="">Houses</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__image"><a href=""><img src="{{ 'assets/images/front-offices.jpg' | theme }}" alt="Offices"></a></div>
+            <div class="card__content">
+                <a href="">Offices</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__image"><a href=""><img src="{{ 'assets/images/front-retail.jpg' | theme }}" alt="Retail"></a></div>
+            <div class="card__content">
+                <a href="">Retail</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# CTA #}
+<section class="cta">
+    <div class="container">
+        <form action="">
+            <label for="">Name:</label>
+            <input type="text" name="" id="">
+            <label for="">email:</label>
+            <input type="email" name="" id="">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <button>Contact Us</button>
+        </form>
+    </div>
+</section>
+
+{# Projects #}
+<section class="showcases">
+    <div class="container">
+        <h2>Projects</h2>
+        <div class="showcase">
+            <div class="showcase__image">
+                <img src="{{ 'assets/images/placeholder-project.jpg' | theme }}" alt="Project image">
+            </div>
+            <div class="showcase__content">
+                <h3>Project</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+        <div class="showcase">
+            <div class="showcase__image">
+                <img src="{{ 'assets/images/placeholder-project.jpg' | theme }}" alt="Project image">
+            </div>
+            <div class="showcase__content">
+                <h3>Project</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+        <div class="showcase">
+            <div class="showcase__image">
+                <img src="{{ 'assets/images/placeholder-project.jpg' | theme }}" alt="Project image">
+            </div>
+            <div class="showcase__content">
+                <h3>Project</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# News #}
+<section class="front-news">
+    <div class="container">
+        <h2>News</h2>
+        <div class="news__feature">
+            <h3>Lorem, ipsum dolor.</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
+        </div>
+        <div class="news__list">
+            <ul>
+                <li>
+                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
+                </li>
+                <li>
+                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
+                </li>
+                <li>
+                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
+                </li>
+                <li>
+                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
+                </li>
+                <li>
+                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

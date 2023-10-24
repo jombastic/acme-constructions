@@ -1,0 +1,15 @@
+description = "Full width layout"
+
+[staticPage]
+useContent = 1
+default = 0
+==
+<header class="header" id="layout-header">
+    {% partial "site/header" %}
+</header>
+
+<main class="main" id="layout-content">
+    {% page %}
+</main>
+
+{% partial "site/footer" %}

@@ -424,13 +424,52 @@ body {
 }
 
 .footer {
-  background-color: var(--eerie-black);
+  background-color: var(--smoky-black);
   color: var(--white);
-  padding-top: 4em;
   padding-bottom: 4em;
+  padding-top: 4em;
 }
 .footer a {
   color: var(--white);
+}
+
+.showcases {
+  padding: 5rem 0;
+}
+.showcases h2 {
+  text-align: center;
+}
+
+.showcase {
+  padding-bottom: 2rem;
+}
+.showcase img {
+  width: 100%;
+  height: auto;
+}
+.front-news {
+  background-color: var(--eerie-black);
+  color: var(--white);
+  padding: 5rem 0;
+}
+.front-news a {
+  color: var(--white);
+}
+.front-news h2 {
+  text-align: center;
+}
+.card__content {
+  padding: 1rem;
+}
+.card__image img {
+  width: 100%;
+  height: auto;
+}
+
+.grid-small {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 #menuButton {
@@ -460,6 +499,62 @@ body {
 }
 .nav-menu--is-open {
   transform: translateX(0);
+}
+.hero {
+  background-image: url("../images/front-hero.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 5rem 0;
+}
+.hero h2 {
+  color: var(--white);
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  max-width: 40rem;
+  padding: 0.5em 1em;
+}
+
+.categories {
+  padding: 5rem 0;
+}
+.categories .card {
+  background-color: var(--alice-blue);
+}
+.categories .card__content {
+  text-align: center;
+}
+.categories .card__content a {
+  color: var(--black);
+}
+
+.cta {
+  background-color: var(--alice-blue);
+  padding: 5rem 0;
+}
+.cta textarea {
+  max-width: 100%;
+}
+@media screen and (min-width: 600px) {
+  .showcase {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .showcase:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+  .front-news .container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 15rem;
+    grid-template-areas: "heading heading" "main sidebar";
+  }
+  .front-news h2 {
+    grid-area: heading;
+  }
 }
 @media only screen and (min-width: 600px) {
   #menuButton {
