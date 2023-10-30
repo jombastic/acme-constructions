@@ -2,6 +2,14 @@ title = "Home"
 url = "/"
 layout = "full-width"
 is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news/category"
+postPage = "news/post"
 ==
 {# Hero #}
 <section class="hero">
@@ -84,34 +92,28 @@ is_hidden = 0
     </div>
 </section>
 
-{# News #}
+<!-- News -->
 <section class="front-news">
     <div class="container">
         <h2>News</h2>
-        <div class="news__feature">
-            <h3>Lorem, ipsum dolor.</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper leo consectetur felis varius rutrum. Nunc nibh augue, gravida ut eleifend et, auctor et odio. Phasellus vel enim at massa sagittis tristique eu a nisl. Nullam arcu sapien, facilisis et velit id, molestie sollicitudin nunc.</p>
+
+        {% set posts = blogPosts.posts %}
+
+        <div class="front-news__feature">
+            <h3><a href="/news/post/{{ posts.0.slug }}">{{ posts.0.title }}</a></h3>
+
+            <p class="excerpt">{{ posts.0.summary | raw }}</p>
+
         </div>
-        <div class="news__list">
-            <ul>
-                <li>
-                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
-                </li>
-                <li>
-                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
-                </li>
-                <li>
-                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
-                </li>
-                <li>
-                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
-                </li>
-                <li>
-                    <h3><a href="">Lorem, ipsum dolor sit.</a></h3>
-                </li>
-            </ul>
+        <div class="front-news__list">
+            {% for post in posts %}
+
+            <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+
+
+            {% else %}
+            <p class="no-data">{{ blogPosts.noPostsMessage }}</p>
+            {% endfor %}
         </div>
     </div>
 </section>

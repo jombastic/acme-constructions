@@ -64,4 +64,13 @@ items:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
+    -
+        title: 'Latest News'
+        type: cms-page
+        code: ''
+        reference: news
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
 name: 'Main menu'
