@@ -4,14 +4,15 @@ description = "Default layout"
 useContent = 1
 default = 0
 ==
-<header class="header" id="layout-header">
-    {% partial "site/header" %}
-</header>
+<div class="content">
+    <header class="header" id="layout-header">
+        {% partial "site/header" %}
+    </header>
 
-<main class="main" id="layout-content">
-    <div class="container">
-        {% page %}
-    </div>
-</main>
-
+    <main class="main" id="layout-content">
+        <div class="container">
+            {% page %}
+        </div>
+    </main>
+</div>
 {% partial "site/footer" %}
