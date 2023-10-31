@@ -1,0 +1,11 @@
+plugin:
+    name: 'lucid.employment::lang.plugin.name'
+    description: 'lucid.employment::lang.plugin.description'
+    author: 'Slavcho Mitrov'
+    icon: oc-icon-wrench
+    homepage: 'http://www.example.com/index.htm'
+navigation:
+    main-menu-item:
+        label: 'Job Vacancies'
+        url: lucid/employment/job
+        icon: icon-wrench
