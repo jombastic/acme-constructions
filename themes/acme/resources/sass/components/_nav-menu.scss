@@ -7,7 +7,7 @@
     background-color: var(--glaucous);
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     flex-direction: column;
     margin: 0;
     padding: 0;
@@ -15,6 +15,7 @@
     top: 3rem;
     right: 1rem;
     transform: translateX(120%);
+    text-transform: uppercase;
     // transform: scale(0);
     overflow: hidden;
     transition: all ease 300ms;
@@ -29,7 +30,7 @@
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: map-get($breakpoints, large)) {
     #menuButton {
         display: none;
     }
