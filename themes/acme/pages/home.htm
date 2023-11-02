@@ -10,6 +10,8 @@ noPostsMessage = "No posts found"
 sortOrder = "published_at desc"
 categoryPage = "news/category"
 postPage = "news/post"
+
+[contactForm]
 ==
 
 <?php
@@ -52,14 +54,8 @@ function onStart()
 {# CTA #}
 <section class="cta">
     <div class="container">
-        <form action="">
-            <label for="">Name:</label>
-            <input type="text" name="" id="">
-            <label for="">email:</label>
-            <input type="email" name="" id="">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-            <button>Contact Us</button>
-        </form>
+        <h2>Get in touch</h2>
+        {% component 'contactForm' %}
     </div>
 </section>
 
