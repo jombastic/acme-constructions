@@ -4,6 +4,7 @@
         text-align: center;
     }
 }
+
 .showcase {
     padding-bottom: 2rem;
 
@@ -21,6 +22,10 @@
         gap: 2rem;
         &:nth-child(odd) {
             flex-direction: row-reverse;
+        }
+
+        &__content, &__image {
+            flex: 1 1;
         }
     }
 }

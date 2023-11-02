@@ -17,4 +17,4 @@ navigation:
             side-menu-item2:
                 label: Categories
                 url: lucid/projects/categories
-                icon: icon-tasks
+                icon: icon-tag
