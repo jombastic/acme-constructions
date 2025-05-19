@@ -63,7 +63,7 @@ return [
         'code' => 'Code',
         'code_comment' => 'Geef de menu item code op indien u deze wilt benaderen via de API.',
         'static_page' => 'Statische pagina',
-        'all_static_pages' => 'Alle statische pagina\'s'
+        'all_static_pages' => 'Alle statische pagina\'s',
     ],
     'content' => [
         'menu_label' => 'Inhoud',
@@ -86,6 +86,7 @@ return [
         'layout' => 'Layout',
         'description' => 'Beschrijving',
         'preview' => 'Voorbeeld',
+        'duplicate' => 'Dupliceren',
         'enter_fullscreen' => 'Volledig scherm openen',
         'exit_fullscreen' => 'Volledig scherm afsluiten',
         'hidden' => 'Verborgen',

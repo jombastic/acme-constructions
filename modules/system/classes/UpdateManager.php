@@ -934,6 +934,11 @@ class UpdateManager
             $this->applyHttpAttributes($http, $postData);
         });
 
+        // @TODO: Refactor when marketplace API finalized
+        if ($result->body === 'Package not found') {
+            $result->code = 500;
+        }
+
         if ($result->code == 404) {
             throw new ApplicationException(Lang::get('system::lang.server.response_not_found'));
         }
@@ -1039,8 +1044,7 @@ class UpdateManager
         $postData['server'] = base64_encode(serialize([
             'php'   => PHP_VERSION,
             'url'   => Url::to('/'),
-            // TODO: Store system boot date in `Parameter`
-            'since' => PluginVersion::orderBy('created_at')->first()->created_at
+            'since' => Parameter::get('system::app.birthday'),
         ]));
 
         if ($projectId = Parameter::get('system::project.id')) {

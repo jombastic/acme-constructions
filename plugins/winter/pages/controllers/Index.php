@@ -2,23 +2,18 @@
 
 namespace Winter\Pages\Controllers;
 
-use ApplicationException;
 use Backend\Classes\Controller;
+use Backend\Facades\BackendMenu;
 use Backend\Widgets\Form;
-use BackendMenu;
-use Cache;
 use Cms\Classes\CmsObject;
 use Cms\Classes\CmsObjectCollection;
 use Cms\Classes\Theme;
 use Cms\Widgets\TemplateList;
-use Config;
-use Event;
 use Exception;
-use Flash;
-use Lang;
-use Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Request;
 use System\Helpers\DateTime;
-use Url;
 use Winter\Pages\Classes\Content;
 use Winter\Pages\Classes\MenuItem;
 use Winter\Pages\Classes\ObjectHelper;
@@ -29,7 +24,12 @@ use Winter\Pages\Plugin as PagesPlugin;
 use Winter\Pages\Widgets\MenuList;
 use Winter\Pages\Widgets\PageList;
 use Winter\Pages\Widgets\SnippetList;
+use Winter\Storm\Exception\ApplicationException;
 use Winter\Storm\Halcyon\Datasource\DatasourceInterface;
+use Winter\Storm\Support\Facades\Config;
+use Winter\Storm\Support\Facades\Event;
+use Winter\Storm\Support\Facades\Flash;
+use Winter\Storm\Support\Facades\URL;
 
 /**
  * Pages and Menus index
@@ -69,7 +69,7 @@ class Index extends Controller
                 }
 
                 if ($this->user->hasAccess('winter.pages.manage_content')) {
-                    new TemplateList($this, 'contentList', function() {
+                    new TemplateList($this, 'contentList', function () {
                         return $this->getContentTemplateList();
                     });
                     $this->vars['activeWidgets'][] = 'contentList';
@@ -80,8 +80,7 @@ class Index extends Controller
                     $this->vars['activeWidgets'][] = 'snippetList';
                 }
             }
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
             $this->handleError($ex);
         }
 
@@ -274,8 +273,58 @@ class Index extends Controller
                 'objectTheme'  => $this->theme->getDirName(),
                 'objectMtime'  => null,
                 'objectParent' => $parent,
-                'parentPage'   => $parentPage
-            ])
+                'parentPage'   => $parentPage,
+            ]),
+        ];
+
+        return $result;
+    }
+
+    public function onDuplicateObject(): array
+    {
+        $this->validateRequestTheme();
+        $type = $this->getObjectType();
+
+        $object = $this->getObjectFromRequest();
+        $parentPage = null;
+        $parent = null;
+
+        if ($type === 'page') {
+            $parentPage = $object->getParent() ?? null;
+
+            if ($parentPage) {
+                $fileName = $parentPage->fileName;
+                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+                $parent = substr(
+                    $fileName,
+                    0,
+                    -strlen('.' . $ext)
+                );
+            }
+        }
+
+        // simply clone the entire object
+        $duplicatedObject = clone $object;
+        // must remove the file name or this page will not be unique
+        unset($duplicatedObject->fileName);
+
+        $widget = $this->makeObjectFormWidget($type, $duplicatedObject);
+        $widget->bindToController();
+
+        $this->vars['objectPath'] = '';
+        $this->vars['canCommit'] = $this->canCommitObject($duplicatedObject);
+        $this->vars['canReset'] = $this->canResetObject($duplicatedObject);
+
+        $result = [
+            'tabTitle' => $this->getTabTitle($type, $duplicatedObject),
+            'tab'      => $this->makePartial('form_page', [
+                'form'         => $widget,
+                'objectType'   => $type,
+                'objectTheme'  => $this->theme->getDirName(),
+                'objectMtime'  => null,
+                'objectParent' => $parent,
+                'parentPage'   => $parentPage,
+            ]),
         ];
 
         return $result;
@@ -293,7 +342,7 @@ class Index extends Controller
 
         $result = [
             'deletedObjects' => $deletedObjects,
-            'theme' => $this->theme->getDirName()
+            'theme' => $this->theme->getDirName(),
         ];
 
         return $result;
@@ -326,20 +375,18 @@ class Index extends Controller
                 $deletedObjects = $object->delete();
                 if (is_array($deletedObjects)) {
                     $deleted = array_merge($deleted, $deletedObjects);
-                }
-                else {
+                } else {
                     $deleted[] = $path;
                 }
             }
-        }
-        catch (Exception $ex) {
+        } catch (Exception $ex) {
             $error = $ex->getMessage();
         }
 
         return [
             'deleted' => $deleted,
             'error'   => $error,
-            'theme'   => Request::input('theme')
+            'theme'   => Request::input('theme'),
         ];
     }
 
@@ -353,7 +400,7 @@ class Index extends Controller
         $type = Request::input('type');
 
         return [
-            'menuItemTypeInfo' => MenuItem::getTypeInfo($type)
+            'menuItemTypeInfo' => MenuItem::getTypeInfo($type),
         ];
     }
 
@@ -410,9 +457,8 @@ class Index extends Controller
 
             if (!$snippet) {
                 $result[$snippetCode] = Lang::get('winter.pages::lang.snippet.not_found', ['code' => $snippetCode]);
-            }
-            else {
-                $result[$snippetCode] =$snippet->getName();
+            } else {
+                $result[$snippetCode] = $snippet->getName();
             }
         }
 
@@ -487,7 +533,7 @@ class Index extends Controller
         $result = [
             'objectPath'  => $type != 'content' ? $object->getBaseFileName() : $object->fileName,
             'objectMtime' => $object->mtime,
-            'tabTitle'    => $this->getTabTitle($type, $object)
+            'tabTitle'    => $this->getTabTitle($type, $object),
         ];
 
         if ($type == 'page') {
@@ -517,7 +563,8 @@ class Index extends Controller
     {
         $result = false;
 
-        if (Config::get('app.debug', false) &&
+        if (
+            Config::get('app.debug', false) &&
             Theme::databaseLayerEnabled() &&
             $this->getThemeDatasource()->sourceHasModel('database', $object)
         ) {
@@ -559,7 +606,7 @@ class Index extends Controller
         $formConfigs = [
             'page'    => '~/plugins/winter/pages/classes/page/fields.yaml',
             'menu'    => '~/plugins/winter/pages/classes/menu/fields.yaml',
-            'content' => '~/plugins/winter/pages/classes/content/fields.yaml'
+            'content' => '~/plugins/winter/pages/classes/content/fields.yaml',
         ];
 
         if (!array_key_exists($type, $formConfigs)) {
@@ -641,7 +688,7 @@ class Index extends Controller
              */
             $translatableTypes = ['text', 'textarea', 'richeditor', 'repeater', 'markdown', 'mediafinder'];
             if (in_array($fieldConfig['type'], $translatableTypes) && array_get($fieldConfig, 'translatable', true)) {
-                $page->translatable[] = 'viewBag['.$fieldCode.']';
+                $page->translatable[] = 'viewBag[' . $fieldCode . ']';
             }
         }
     }
@@ -664,8 +711,7 @@ class Index extends Controller
 
             if ($info['type'] != 'text') {
                 $fieldConfig['type'] = 'richeditor';
-            }
-            else {
+            } else {
                 $fieldConfig['type'] = 'codeeditor';
                 $fieldConfig['language'] = 'text';
                 $fieldConfig['theme'] = 'chrome';
@@ -677,12 +723,12 @@ class Index extends Controller
                 $fieldConfig['margin'] = '20';
             }
 
-            $formWidget->secondaryTabs['fields']['placeholders['.$placeholderCode.']'] = $fieldConfig;
+            $formWidget->secondaryTabs['fields']['placeholders[' . $placeholderCode . ']'] = $fieldConfig;
 
             /*
              * Translation support
              */
-            $page->translatable[] = 'placeholders['.$placeholderCode.']';
+            $page->translatable[] = 'placeholders[' . $placeholderCode . ']';
         }
     }
 
@@ -714,7 +760,7 @@ class Index extends Controller
                     : $object->getBaseFileName();
 
                 if (!$result) {
-                    $result = Lang::get('cms::lang.'.$type.'.new');
+                    $result = Lang::get('cms::lang.' . $type . '.new');
                 }
                 break;
 
@@ -747,8 +793,8 @@ class Index extends Controller
                 'objectType'   => $type,
                 'objectTheme'  => $this->theme->getDirName(),
                 'objectMtime'  => $object->mtime,
-                'objectParent' => Request::input('parentFileName')
-            ])
+                'objectParent' => Request::input('parentFileName'),
+            ]),
         ];
     }
 

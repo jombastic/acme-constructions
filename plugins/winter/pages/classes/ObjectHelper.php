@@ -1,12 +1,14 @@
-<?php namespace Winter\Pages\Classes;
+<?php
 
-use ApplicationException;
+namespace Winter\Pages\Classes;
+
 use Cms\Classes\CmsCompoundObject;
 use Cms\Classes\CmsObject;
 use Cms\Classes\Theme;
-use Config;
-use Lang;
-use Session;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Session;
+use Winter\Storm\Exception\ApplicationException;
+use Winter\Storm\Support\Facades\Config;
 
 class ObjectHelper
 {
@@ -60,14 +62,14 @@ class ObjectHelper
     /**
      * Converts line endings based on the system's configuration
      */
-    public static function convertLineEndings(string $markup): string
+    public static function convertLineEndings(?string $markup): string
     {
         if (Config::get('cms.convertLineEndings', false) === true) {
             $markup = str_replace("\r\n", "\n", $markup);
             $markup = str_replace("\r", "\n", $markup);
         }
 
-        return $markup;
+        return $markup ?? '';
     }
 
     /**
